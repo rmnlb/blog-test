@@ -1,26 +1,38 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {Switch, Route} from 'react-router';
+import styled from 'styled-components'
+
+/**
+ * Containers
+ */
+import Header from './containers/Header';
+
+/**
+ * Route pages
+ */
+import PostsPage from './pages/PostsPage'
+import SinglePost from './pages/SinglePost'
+import ErrorPage from './pages/ErrorPage'
+
+const Wrapper = styled.div`
+    font-family: 'Montserrat', sans-serif;
+    color: #000;
+`;
 
 class App extends Component {
+
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+        <Wrapper>
+          <Header
+            showPopUp={this.showPopUp}
+          />
+          <Switch>
+            <Route exact path='/' component={PostsPage}/>
+            <Route path='/posts/:postId' component={props => <SinglePost {...props} />}/>
+            <Route component={ErrorPage}/>
+          </Switch>
+        </Wrapper>
     );
   }
 }
